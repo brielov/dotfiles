@@ -20,7 +20,7 @@
 ## Helix Language Servers
 
 ```
-npm i -g typescript-language-server vscode-langservers-extracted @tailwindcss/language-server emmet-ls prettier
+npm i -g typescript-language-server vscode-langservers-extracted @tailwindcss/language-server @olrtg/emmet-language-server prettier
 ```
 
 ## Installation
