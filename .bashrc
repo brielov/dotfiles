@@ -19,3 +19,11 @@ alias ls="eza --icons --color=always --group-directories-first"
 alias ll="eza -alF --icons --color=always --group-directories-first"
 alias e="hx"
 alias lg="lazygit"
+
+# Git aliases
+alias gco='git checkout'
+alias gci='git commit'
+alias gst='git status'
+alias gbr='git branch'
+alias gdf='git diff'
+alias glg='git log --graph --pretty=format:"%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset" --abbrev-commit'
