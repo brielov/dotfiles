@@ -3,16 +3,17 @@ if [[ $(uname) == "Darwin" ]]; then
   [[ -r "/opt/homebrew/etc/profile.d/bash_completion.sh" ]] && . "/opt/homebrew/etc/profile.d/bash_completion.sh"
 fi
 
+export PATH="$HOME/.bun/bin:$PATH"
+export PATH="$HOME/.deno/bin:$PATH"
+export PATH="$HOME/.local/bin:$PATH"
+export PATH="$HOME/.local/share/fnm:$PATH"
+export PATH="$HOME/.bin:$PATH"
+
 source "$HOME/.cargo/env"
 
 eval "$(starship init bash)"
 eval "$(zoxide init bash)"
 eval "$(fnm env --use-on-cd)"
-
-export PATH="$HOME/.bun/bin:$PATH"
-export PATH="$HOME/.deno/bin:$PATH"
-export PATH="$HOME/.local/bin:$PATH"
-export PATH="$HOME/.bin:$PATH"
 
 # Aliases
 alias ls="eza --icons --color=always --group-directories-first"
