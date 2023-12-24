@@ -1,0 +1,36 @@
+#!/bin/bash
+
+config_file="$HOME/.config/helix/config.toml"
+light_theme="rose_pine_dawn"
+dark_theme="rose_pine"
+hx_process="hx"
+
+if [ "$#" -eq 0 ]; then
+    # If no argument provided, determine the current theme
+    current_theme=$(gsettings get org.gnome.desktop.interface color-scheme)
+    if [[ "$current_theme" =~ 'dark' ]]; then
+        theme="dark"
+    else
+        theme="light"
+    fi
+else
+    # If an argument is provided, use it as the theme
+    theme=$1
+
+    if [ "$theme" != "light" ] && [ "$theme" != "dark" ]; then
+        echo "Invalid theme. Use 'light' or 'dark'."
+        exit 1
+    fi
+fi
+
+if [ "$theme" = "light" ]; then
+    sed -i 's/theme = ".*"/theme = "'"$light_theme"'"/' "$config_file"
+    echo "Switched to light theme."
+elif [ "$theme" = "dark" ]; then
+    sed -i 's/theme = ".*"/theme = "'"$dark_theme"'"/' "$config_file"
+    echo "Switched to dark theme."
+fi
+
+# Send SIGUSR1 to the hx process, even if it is not running
+pkill -USR1 "$hx_process" || true
+
