@@ -3,7 +3,7 @@
     email = brielov@icloud.com
 
 [core]
-    editor = hx
+    editor = helix
     autocrlf = input
     whitespace = trailing-space,space-before-tab
 	pager = delta

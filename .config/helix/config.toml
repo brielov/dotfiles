@@ -1,4 +1,4 @@
-theme = "adwaita-dark"
+theme = "konsole"
 
 [editor]
 line-number = "relative"
