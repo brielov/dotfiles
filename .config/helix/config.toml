@@ -1,0 +1,12 @@
+theme = "tokyonight"
+
+[editor]
+line-number = "relative"
+
+[editor.lsp]
+enable = true
+display-messages = true
+display-inlay-hints = true
+
+[editor.indent-guides]
+render = true

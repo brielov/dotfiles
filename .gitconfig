@@ -1,0 +1,49 @@
+[core]
+    editor = helix
+    autocrlf = input
+    whitespace = trailing-space,space-before-tab
+	pager = delta
+
+[push]
+    default = current
+
+[color]
+    ui = auto
+
+[interactive]
+    diffFilter = delta --color-only --features=interactive
+
+[alias]
+    # Shortcuts for common commands
+    co = checkout
+    ci = commit
+    st = status
+    br = branch
+    df = diff
+    lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+
+[credential]
+    helper = cache --timeout=3600
+
+[push]
+    default = simple
+	autoSetupRemote = true
+
+[init]
+    defaultBranch = master
+
+[delta]
+    features = decorations
+	line-numbers = true
+
+[delta "interactive"]
+    keep-plus-minus-markers = false
+
+[delta "decorations"]
+    commit-decoration-style = blue ol
+    commit-style = raw
+    file-style = omit
+    hunk-header-decoration-style = blue box
+    hunk-header-file-style = red
+    hunk-header-line-number-style = "#067a00"
+    hunk-header-style = file line-number syntax

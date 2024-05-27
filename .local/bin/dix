@@ -1,0 +1,79 @@
+#!/bin/bash
+
+# Colors
+GREEN='\033[0;32m'
+RED='\033[0;31m'
+YELLOW='\033[0;33m'
+NC='\033[0m' # No Color
+
+# Emojis
+CHECK_MARK="\xE2\x9C\x94"
+X_MARK="\xE2\x9D\x8C"
+
+# Configuration content
+config_content=$(cat <<EOF
+[language-server.deno-ls]
+command = "deno"
+args = ["lsp"]
+config = { enable = true, unstable = true }
+
+[[language]]
+name = "typescript"
+language-servers = ["deno-ls"]
+auto-format = true
+EOF
+)
+
+# Banner
+echo -e "${YELLOW}===============================${NC}"
+echo -e "${YELLOW}  Deno Project Initialization  ${NC}"
+echo -e "${YELLOW}===============================${NC}"
+echo -e "This script will initialize a new Deno project"
+echo -e "and create a hidden '.helix' directory with"
+echo -e "configuration for the 'helix' editor for optimal"
+echo -e "integration with 'deno lsp'.${NC}"
+
+# Specify the binary name
+binary_name="deno"
+
+# Find the path of the binary
+binary_path=$(command -v "$binary_name")
+directory_path="$(pwd)/.helix"
+file_name="$directory_path/languages.toml"
+
+# Check if the binary is not found or not executable
+if [ ! -x "$binary_path" ]; then
+    echo -e "${RED}${X_MARK} Error:${NC} Binary '$binary_name' not found or not executable."
+    exit 1
+fi
+
+# If the script hasn't exited, it means the binary was found and is executable
+echo -e "${GREEN}${CHECK_MARK}${NC} Binary '$binary_name' found at: $binary_path"
+
+# Initialize using deno init (hide the output)
+"$binary_path" init > /dev/null 2>&1
+
+# Check if the directory exists
+if [ ! -d "$directory_path" ]; then
+    # If the directory does not exist, create it
+    mkdir -p "$directory_path"
+    echo -e "${GREEN}${CHECK_MARK}${NC} Directory '$directory_path' created."
+else
+    echo -e "${GREEN}${CHECK_MARK}${NC} Directory '$directory_path' already exists."
+fi
+
+# Check if the file exists and has content
+if [ -f "$file_name" ] && [ -s "$file_name" ]; then
+    # File exists and has content, check if the lines to append are already present
+    if ! grep -q "\[language-server.deno-ls\]" "$file_name"; then
+        # Lines are not present, append them
+        echo -e "$config_content" >> "$file_name"
+        echo -e "${GREEN}${CHECK_MARK}${NC} Configuration appended to '$file_name'."
+    else
+        echo -e "${GREEN}${CHECK_MARK}${NC} Configuration already present in '$file_name'."
+    fi
+else
+    # File does not exist or is empty, create it
+    echo -e "$config_content" > "$file_name"
+    echo -e "${GREEN}${CHECK_MARK}${NC} File '$file_name' created with configuration."
+fi
